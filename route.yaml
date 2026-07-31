@@ -1,0 +1,29 @@
+# route.yaml
+# ──────────────────────────────────────
+# Route = OpenShift's Ingress
+# Exposes service to internet
+# Auto generates URL!
+# Has built-in SSL!
+
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: flask-app
+  labels:
+    app: flask-app
+spec:
+  # Map to service
+  to:
+    kind: Service
+    name: flask-app
+    weight: 100
+
+  port:
+    targetPort: http
+
+  # Enable HTTPS!
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+
+  wildcardPolicy: None

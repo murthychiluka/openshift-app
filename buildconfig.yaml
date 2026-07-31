@@ -1,0 +1,44 @@
+# buildconfig.yaml
+# ──────────────────────────────────────
+# BuildConfig = How to build your app
+# Pulls from GitHub
+# Builds Docker image
+# Pushes to ImageStream
+
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: flask-app
+  labels:
+    app: flask-app
+spec:
+  # Where to get source code
+  source:
+    type: Git
+    git:
+      uri: https://github.com/murthychiluka/openshift-app.git
+      ref: main
+
+  # How to build
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+
+  # Where to push built image
+  output:
+    to:
+      kind: ImageStreamTag
+      name: flask-app:latest
+
+  # Auto build triggers
+  triggers:
+    # Build when ImageStream changes
+    - type: ImageChange
+      imageChange: {}
+    # Build when config changes
+    - type: ConfigChange
+    # Build when GitHub webhook fires
+    - type: GitHub
+      github:
+        secret: my-github-secret

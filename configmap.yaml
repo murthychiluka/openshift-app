@@ -1,0 +1,20 @@
+# configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: flask-config
+data:
+  APP_ENV: "production"
+  LOG_LEVEL: "INFO"
+  DB_HOST: "database.example.com"
+
+---
+# secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: flask-secret
+type: Opaque
+stringData:
+  DB_PASSWORD: "admin123"
+  API_KEY: "mysecretkey"

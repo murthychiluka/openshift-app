@@ -1,0 +1,15 @@
+# imagestream.yaml
+# ──────────────────────────────────────
+# ImageStream = Like a Docker image tracker
+# Watches for new images
+# Triggers deployments automatically!
+
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: flask-app
+  labels:
+    app: flask-app
+spec:
+  lookupPolicy:
+    local: false
